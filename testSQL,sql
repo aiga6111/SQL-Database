@@ -5,8 +5,13 @@ create schema if not exists TestDB;
 use TestDB;
 
 create table if not exists TestTable (
-  Id_no int not null auto_increment,
+  Id_no int not null auto_increment, 
   firstname varchar(30) not null,
   lastname varchar(30) not null,
   hobby varchar(30) not null,
-  constraint testtablekey primary key(Id_no));
+  constraint ttablekey primary key(Id_no));
+  
+insert into testtable values
+(null, 'Brandon', 'Julian', 'not submitting lab 8');
+
+select * from testtable;
