@@ -9,4 +9,4 @@ create table if not exists TestTable (
   firstname varchar(30) not null,
   lastname varchar(30) not null,
   hobby varchar(30) not null,
-  constraint ttablekey primary key(Id_no));
+  constraint testtablekey primary key(Id_no));
