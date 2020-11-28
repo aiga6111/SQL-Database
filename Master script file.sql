@@ -64,3 +64,44 @@ DELIMITER ;
 
 CALL cust_type(15, @custype);
 select @custype;
+
+								#Create trigger to update customer audit table with a update
+Delimiter $$
+
+CREATE TRIGGER cust_upd_old
+after update on customers
+for each row
+	Begin
+		insert into cust_audit(when_updated,CustomerID, CustomerName, 
+						Email, Phone, custType, DoctorID,
+                        who_updated, row_value)
+		values(curdate(), old.CustomerID, old.CustomerName, 
+						old.Email, old.Phone,
+						old.custType_TypeInt, old.Doctor_DoctorID,
+                        current_user(),'old info');
+	End $$
+    
+Delimiter ;
+
+Delimiter $$
+
+CREATE TRIGGER cust_upd_new
+after update on customers
+for each row
+follows cust_upd_old
+	Begin
+		insert into cust_audit(when_updated,CustomerID, CustomerName, 
+						Email, Phone, custType, DoctorID,
+                        who_updated, row_value)
+		values(curdate(), new.CustomerID, new.CustomerName, 
+						new.Email, new.Phone,
+						new.custType_TypeInt, new.Doctor_DoctorID,
+                        current_user(),'New info');
+	End $$
+    
+Delimiter ;
+
+	
+update customers set Doctor_DoctorID = 8 where customerID = 90;
+								
+								
