@@ -115,5 +115,31 @@ format((select avg(salePrice)
 from transactiondetails
 join product on transactiondetails.Product_ProductID = product.ProductID
 group by Product_ProductID;
+				 
+#Avg potency per strain
+				 
+select strain, format(avg(potency),0) as_strain_avg_potency from product
+join productdetails on productdetails.Product_ProductID = product.ProductID
+group by strain;
+				 
+#Max potency by strain
+
+select ProductName, Max(Potency)
+from (select productName, strain, potency from product
+			join productdetails on productdetails.Product_ProductID = product.ProductID
+			order by strain, potency desc) as sub
+group by Strain;
+				 
+
+#min potency by strain
+				 
+select ProductName, Min(Potency)
+from (select productName, strain, potency from product
+			join productdetails on productdetails.Product_ProductID = product.ProductID
+			order by strain, potency desc) as sub
+group by Strain;
+				 
+				 
+				 
 								
 								
