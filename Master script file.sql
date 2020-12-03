@@ -103,5 +103,17 @@ Delimiter ;
 
 	
 update customers set Doctor_DoctorID = 8 where customerID = 90;
+
+								
+#Find the average sale price for each product compared to the total average sale price.
+								
+select ProductName,Product_ProductID, format(avg(salePrice), 2) as avg_product_sale_price,
+
+format((select avg(salePrice) 
+	from transactiondetails),2) as avg_sale
+
+from transactiondetails
+join product on transactiondetails.Product_ProductID = product.ProductID
+group by Product_ProductID;
 								
 								
